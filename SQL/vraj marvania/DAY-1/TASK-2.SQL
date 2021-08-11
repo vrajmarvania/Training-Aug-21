@@ -1,12 +1,11 @@
-
 CREATE TABLE job_History
 (
 EMPLOYEE_ID int not null PRIMARY KEY IDENTITY(1,1),
 START_DATE date not null,
-END_DATE date NOT NULL
-CHECK (END_DATE LIKE '--/--/----'), 
+END_DATE varchar(10) NOT NULL CHECK(END_DATE LIKE '__%/%__%/%____'),
 JOB_ID varchar(10) NOT NULL, 
-DEPARTMENT_ID decimal(4,0) NOT NULL 
+DEPARTMENT_ID decimal(4,0) NOT NULL ,
 )
 
-insert into job_history(EMPLOYEE_ID,START_DATE,END_DATE,JOB_ID,DEPARTMENT_ID) VALUES(1,'02-02-2020',CONVERT(date, '13/02/2014', 103),2,2)
+INSERT INTO job_History(START_DATE,END_DATE,JOB_ID,DEPARTMENT_ID) VALUES ('02-02-2020','02/02/2020',1,1)
+select * from job_History

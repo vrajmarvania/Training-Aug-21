@@ -1,9 +1,10 @@
 CREATE table Countrie
 (
- CountryId int CONSTRAINT AK_CONTRYID UNIQUE(CountryId),
- CountryName VARCHAR(50)  CHECK(CountryName IN('Italy','India','China')),
- RegionId  int  CONSTRAINT AK_RegionId UNIQUE(RegionId),
+ CountryId int not null PRIMARY KEY IDENTITY(1,1) ,
+ CountryName VARCHAR(50) NOT NULL CHECK(CountryName IN('Italy','India','China')), 
+ RegionId  int  CONSTRAINT CK_RegionId UNIQUE(RegionId),
 )
 
-INSERT INTO Countrie(CountryId,CountryName,RegionId) VALUES(2,'Italy',4)
+INSERT INTO Countrie(CountryName,RegionId) VALUES('Italy',4),('India',3)
+
 select * from  Countrie
