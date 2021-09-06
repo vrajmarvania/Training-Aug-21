@@ -1,4 +1,5 @@
 --Assignment:
+--Note: Refer existing employee Table
 
 --1.SELECT employee details FROM employee table if data exists in incentive table ?
 
@@ -38,6 +39,7 @@
 
                                      
 
+--(Note refer tables from sql supported files)
 
 /*1.Create a View to Find the names (first_name, last_name), job, department number, and    department name of the employees who work in London*/
   

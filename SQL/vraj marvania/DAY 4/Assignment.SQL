@@ -1,19 +1,17 @@
-
-
 --1-Write a query to rank employees based on their salary for a month
 
 SELECT RANK() OVER(ORDER BY Salary )[Rank],* 
-from Employees 
+FROM Employees 
 
 
 
 --2-Select 4th Highest salary from employee table using ranking function
 
 
-select * from(SELECT  *,RANK() 
+SELECT * FROM(SELECT  *,RANK() 
               OVER(ORDER BY Salary desc)[IDSalary]
  			  )temp
-where IDSalary=4
+WHERE IDSalary=4
 
 
 --3-Get department, total salary with respect to a department from employee table.
@@ -47,8 +45,6 @@ ORDER BY Salary ASC
 
 
 --7-Select department, total salary with respect to a department from employee table where total salary greater than 50000 order by TotalSalary descending
-
-
 
 --USING WHERE
 SELECT * FROM(SELECT DepartmentID,SUM(Salary) AS MINS  

@@ -3,13 +3,13 @@ use AdventureWorks2012
 		CREATE VIEW EmployeeRecords1
 		AS
 			 SELECT *
-			 FROM [HumanResources].[Employee];
+			 FROM [HumanResources].[Employee]
 
 -->SQL VIEW to fetch a few columns of a table
 		CREATE VIEW EmployeeRecordse1
 		AS
 			 SELECT NationalIDNumber,LoginID,JobTitle 
-			 FROM [HumanResources].[Employee];
+			 FROM [HumanResources].[Employee]
 
 -->SQL VIEW to fetch a few columns of a table and filter results using WHERE clause
 		CREATE VIEW EmployeeRecordse2
@@ -19,13 +19,13 @@ use AdventureWorks2012
 					JobTitle, 
 					MaritalStatus
 			 FROM [HumanResources].[Employee]
-			 WHERE MaritalStatus = 'M';
+			 WHERE MaritalStatus = 'M'
 
 -->sp_refreshview to update the Metadata of a SQL VIEW
 			CREATE VIEW DemoViewnew
 			AS
 				   SELECT top(10) NationalIDNumber,LoginID,JobTitle 
-				   FROM [HumanResources].[Employee];
+				   FROM [HumanResources].[Employee]
 			-->alter a table add new column
 			Alter Table [HumanResources].[Employee] Add City nvarchar(50)
 
@@ -42,17 +42,17 @@ use AdventureWorks2012
 			 WITH SCHEMABINDING
 			 AS
 				 SELECT top(10) NationalIDNumber,LoginID,JobTitle 
-				 FROM [HumanResources].[Employee];
+				 FROM [HumanResources].[Employee]
 
 			 --error  alter
-			 ALTER TABLE [HumanResources].[Employee] ALTER COLUMN LoginID BIGINT;
+			 ALTER TABLE [HumanResources].[Employee] ALTER COLUMN LoginID BIGINT
 
 --> SQL VIEW ENCRYPTION
 			CREATE VIEW DemoView24
 			WITH ENCRYPTION
 			AS
 				  SELECT top(10) NationalIDNumber,LoginID,JobTitle 
-				 FROM [HumanResources].[Employee];
+				 FROM [HumanResources].[Employee]
 
 		   Exec sp_helptext DemoView24
 
@@ -76,13 +76,13 @@ use AdventureWorks2012
 			 SELECT *
 			 FROM [dbo].[MyTable]
 			 WHERE [Codeone] LIKE 'F%'
-		  WITH CHECK OPTION;
+		  WITH CHECK OPTION
 
 		  Insert into DemoView values (5,'CC','Raj','Raj')
 		  --error
 
 -->Drop SQL VIEW
-	     DROP VIEW demoview;
+	     DROP VIEW demoview
 
 -->Alter a SQL VIEW
 		 Alter VIEW DemoView
@@ -90,4 +90,57 @@ use AdventureWorks2012
 		 SELECT *
 		 FROM [dbo].[MyTable]
 		 WHERE [Codeone] LIKE 'C%'
-		 WITH CHECK OPTION;
+		 WITH CHECK OPTION
+
+
+--->Subqueries
+
+USE AdventureWorks2012
+GO
+SELECT Ord.SalesOrderID, Ord.OrderDate,
+    (SELECT MAX(OrdDet.UnitPrice)
+     FROM Sales.SalesOrderDetail AS OrdDet
+     WHERE Ord.SalesOrderID = OrdDet.SalesOrderID) AS MaxUnitPrice
+FROM Sales.SalesOrderHeader AS Ord
+
+
+USE AdventureWorks2012
+GO
+SELECT [Name]
+FROM Sales.Store
+WHERE BusinessEntityID NOT IN
+    (SELECT CustomerID
+     FROM Sales.Customer
+     WHERE TerritoryID = 5)
+GO
+
+--Multiple levels of nesting
+
+SELECT LastName, FirstName
+FROM Person.Person
+WHERE BusinessEntityID IN
+    (SELECT BusinessEntityID
+     FROM HumanResources.Employee
+     WHERE BusinessEntityID IN
+        (SELECT BusinessEntityID
+         FROM Sales.SalesPerson)
+    )
+
+--Correlated subqueries
+
+SELECT DISTINCT c.LastName, c.FirstName, e.BusinessEntityID 
+FROM Person.Person AS c JOIN HumanResources.Employee AS e
+ON e.BusinessEntityID = c.BusinessEntityID 
+WHERE 5000.00 IN
+    (SELECT Bonus
+    FROM Sales.SalesPerson sp
+    WHERE e.BusinessEntityID = sp.BusinessEntityID) 
+
+
+
+SELECT StateProvinceID, AddressID
+FROM Person.Address
+WHERE AddressID IN
+    (SELECT AddressID
+     FROM Person.Address
+     WHERE StateProvinceID = 39)
