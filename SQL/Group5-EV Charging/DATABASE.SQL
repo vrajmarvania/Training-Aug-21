@@ -281,3 +281,78 @@ INSERT INTO Aminities(AminityName)
         ('Retail Store'),
         ('Food Court'),
         ('Kids Activity Zone')
+
+
+CREATE TABLE PaymentMode
+(
+	ID INT CONSTRAINT PaymentMode_ID_Pk PRIMARY KEY IDENTITY(1,1),
+	Mode VARCHAR(20) CONSTRAINT PaymentMode_Mode_NotNull NOT NULL,
+	IsDeleted BIT CONSTRAINT PaymentMode_IsDeleted_Chk NOT NULL CHECK (IsDeleted IN (0,1)) DEFAULT 0
+)
+
+INSERT INTO PaymentMode(Mode) 
+	VALUES 
+		('Credit Card'),('Debit Card'),('Net Banking'),('PayTM'),('UPI'),('Cash')
+
+CREATE TABLE SessionRecord
+(
+	SessionID INT CONSTRAINT SessionRecord_SessionID_PkAuto PRIMARY KEY IDENTITY(1,1),
+	CustomerID INT CONSTRAINT SessionRecord_CustomerID_Fk_NotNull NOT NULL FOREIGN KEY REFERENCES Customer(CustomerID) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	PortID INT CONSTRAINT SessionRecord_PortID_Fk_NotNull NOT NULL FOREIGN KEY REFERENCES ConnectionPort(PortID) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	StartTime DATETIME CONSTRAINT SessionRecord_StartTime_NotNull NOT NULL,
+	EndTime DATETIME CONSTRAINT SessionRecord_EndTime_NotNull NOT NULL,
+	Amount MONEY CONSTRAINT SessionRecord_Amount_NotNull NOT NULL,
+	Units DECIMAL(5,2) CONSTRAINT SessionRecord_Units_NotNull NOT NULL,
+	PaymentID VARCHAR(25) CONSTRAINT SessionRecord_PaymentID_DefNull DEFAULT NULL,
+	PaymentMode INT CONSTRAINT SessionRecord_PaymentID_Fk_NotNull NOT NULL FOREIGN KEY REFERENCES PaymentMode(ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	[Date] DATETIME CONSTRAINT SessionRecord_Date_Default NOT NULL DEFAULT GETDATE(),
+	IsDeleted BIT CONSTRAINT SessionRecord_IsDeleted_Chk NOT NULL CHECK (IsDeleted IN (0,1)) DEFAULT 0
+)
+
+
+INSERT INTO SessionRecord (CustomerID,PortID,StartTime,EndTime,Amount,Units,PaymentID,PaymentMode,Date)
+	VALUES
+		(2,4,'08/01/2021 09:30','08/01/2021 10:30',100,5.56,'P134987256LJS',1,'08/01/2021'),
+		(5,18,'08/12/2021 05:00','08/12/2021 06:00',75,4.1,'P134987258LJS',1,'08/12/2021'),
+		(3,22,'08/14/2021 12:00','08/14/2021 13:30',110,6.1,'P134987259LJS',4,'08/14/2021'),
+		(4,14,'08/27/2021 07:30','08/27/2021 08:30',80,4.48,'P134987260LJS',5,'08/27/2021'),
+		(4,4,'09/27/2021 07:45','09/27/2021 09:30',80,4.48,'P134987261LJS',5,'09/27/2021'),
+		(3,17,'09/14/2021 12:00','09/14/2021 13:45',110,6.1,'P134987262LJS',4,'09/14/2021'),
+		(5,12,'09/12/2021 05:50','09/12/2021 06:20',75,4.1,'P134987263LJS',1,'09/12/2021'),
+		(2,6,'09/01/2021 011:30','09/01/2021 12:45',100,5.56,'P134987264LJS',1,'09/01/2021')
+
+CREATE TABLE Feedback
+(
+	FeedbackID INT CONSTRAINT Feedback_FeedbackID_Pk PRIMARY KEY IDENTITY(1,1),
+	CustomerID INT CONSTRAINT Feedback_CustomerID_Fk_NotNull NOT NULL FOREIGN KEY REFERENCES Customer(CustomerID) ON DELETE NO ACTION ON UPDATE CASCADE,
+	StationId INT CONSTRAINT Feedback_StationId_Fk NOT NULL FOREIGN KEY REFERENCES ChargingStation(StationID) ON DELETE CASCADE ON UPDATE CASCADE,
+	Rating TINYINT CONSTRAINT Feedback_Rating_Chk1to5_NotNull NOT NULL CHECK (Rating >= 1 AND Rating <=5),
+	Comment VARCHAR(500),
+	IsDeleted BIT CONSTRAINT Feedback_IsDeleted_Chk NOT NULL CHECK (IsDeleted IN (0,1)) DEFAULT 0
+)
+
+INSERT INTO Feedback(CustomerID,StationId,Rating,Comment)
+	VALUES
+		(2,3,5,'Fast charging and good facility'),
+		(5,2,4,'Good experience'),
+		(3,2,5,'Clean campus,fast charge, good facility'),
+		(4,5,3,'Good facility but management should be improve')
+
+
+CREATE TABLE Expenditure
+(
+	ExpID INT CONSTRAINT Expenditure_ExpID_Pk PRIMARY KEY IDENTITY(1,1),
+	StationID INT CONSTRAINT Expenditure_StationID_Fk FOREIGN KEY REFERENCES ChargingStation(StationID) ON DELETE NO ACTION ON UPDATE NO ACTION NOT NULL,
+	EnergyCharges MONEY CONSTRAINT Expenditure_EnergyCharges_NotNull NOT NULL,
+	Maintainance MONEY CONSTRAINT Expenditure_Maintainance_NotNull NOT NULL,
+	Date DATETIME CONSTRAINT Expenditure_Date_def DEFAULT GETDATE() NOT NULL,
+	IsDeleted BIT CONSTRAINT Expenditure_IsDeleted_def NOT NULL CHECK (IsDeleted IN (0,1)) DEFAULT 0
+)
+
+INSERT INTO Expenditure (StationID,EnergyCharges,Maintainance)
+	VALUES
+		(1,10000,5000),
+		(2,12000,8000),
+		(3,10000,11000),
+		(4,12000,5000),
+		(5,11000,3000)
