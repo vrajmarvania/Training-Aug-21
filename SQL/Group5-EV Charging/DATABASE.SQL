@@ -180,3 +180,104 @@ INSERT INTO StationHasAminity(StationId,AminityID)
 	VALUES 
 		(1,1),(1,2),(1,4),(1,5),(1,7),(2,4),(2,3),(2,1),(3,7),(4,6),(5,2)
 
+
+
+
+CREATE TABLE Employees
+(
+EmployeeID INT  CONSTRAINT  Employees_EmployeeID_PkAuto PRIMARY KEY IDENTITY(1,1),
+[Name] VARCHAR(50) CONSTRAINT Employees_Name_NotNull NOT null,
+PhoneNumber NUMERIC(10) CONSTRAINT Employees_phonenumber_NotNull_Chk NOT NULL CHECK (PhoneNumber BETWEEN 1000000000 AND 9999999999), 
+EmailId VARCHAR(30) CONSTRAINT Employees_Email_Chk CHECK (EmailId LIKE '[a-z,0-9,_,-]%@[a-z]%.[a-z][a-z]%'),
+IsDeleted BIT CONSTRAINT Employees_IsDeleted_Chk NOT NULL CHECK (IsDeleted IN (0,1)) DEFAULT 0
+)
+
+INSERT INTO  Employees(Name,PhoneNumber,EmailId)
+	VALUES
+		('Virat',9824685963,'abd123@gmail.com'),
+		('Umesh',8564293846,'jkl421@gmail.com'),
+		('Chirag',9654821563,'okm852@gmail.com'),
+		('Hardik',9265861573,'asd453@gmail.com'),
+		('Ravi',8320046042,'pqr963@gmail.com')
+
+
+
+CREATE TABLE EmployeeWorksAt
+(
+RecordId INT CONSTRAINT EmployeeWorksAt_RecordID_Pk PRIMARY KEY IDENTITY(1,1),
+EmployeeID INT CONSTRAINT EmployeeWorksAt_EmployeeID_Fk FOREIGN KEY REFERENCES Employees(EmployeeID) ON DELETE NO ACTION ON UPDATE NO ACTION NOT NULL,
+StationID INT CONSTRAINT EmployeeWorksAt_StationID_Fk FOREIGN KEY REFERENCES ChargingStation(StationID) ON DELETE NO ACTION ON UPDATE NO ACTION NOT NULL,
+Salary MONEY CONSTRAINT EmployeeWorksAt_Salary_NotNull NOT NULL,
+Date DATETIME CONSTRAINT EmployeeWorksAt_Date_def DEFAULT GETDATE() NOT NULL,
+IsDeleted BIT CONSTRAINT EmployeeWorksAt_IsDeleted_def NOT NULL CHECK (IsDeleted IN (0,1)) DEFAULT 0
+)
+
+INSERT INTO EmployeeWorksAt (EmployeeID,StationID,Salary) 
+	VALUES
+		(1,3,25000),
+		(2,4,25000),
+		(3,5,25000),
+		(4,1,25000),
+		(5,2,25000)
+		
+
+
+CREATE TABLE States 
+(
+StateID INT  CONSTRAINT  States_StateID_PkAuto PRIMARY KEY IDENTITY(1,1),
+[Name] VARCHAR (25) CONSTRAINT States_Name_NotNull NOT NULL,
+IsDeleted BIT CONSTRAINT States_IsDeleted_Chk NOT NULL CHECK (IsDeleted IN (0,1)) DEFAULT 0
+)
+
+
+INSERT INTO  States(Name) 
+	VALUES
+	  ('Andhra Pradesh'),
+      ('Arunachal Pradesh'),
+	  ('Assam'),
+	  ('Bihar'),
+	  ('Chhattisgarh'),
+	  ('Delhi'),
+	  ('Goa'),
+	  ('Gujrat'),
+	  ('Haryana'),
+	  ('Himachal Pradesh'),
+	  ('Jharkhand'),
+	  ('Karnataka'),
+	  ('Kerala'),
+	  ('Madhya Pradesh'),
+	  ('Maharashtra'),
+	  ('Manipur'),
+	  ('Meghalaya'),
+	  ('Mizoram'),
+	  ('Nagaland'),
+	  ('Odisha'),
+	  ('Punjab'),
+	  ('Rajasthan'),
+	  ('sikkim'),
+	  ('Tamil Nadu'),
+	  ('Tripura'),
+	  ('Uttar Pradesh'),
+	  ('Uttarakhand'),
+	  ('West Bengal')
+
+
+
+CREATE TABLE Aminities
+(
+AminityID INT CONSTRAINT Aminities_AminitiesID_PkAuto PRIMARY KEY IDENTITY(1,1),
+AminityName VARCHAR(60) CONSTRAINT Aminities_AminityName_NotNull NOT NULL,
+IsDeleted BIT CONSTRAINT Aminities_IsDeleted_Chk NOT NULL CHECK (IsDeleted IN (0,1)) DEFAULT 0
+)
+
+INSERT INTO Aminities(AminityName)
+	VALUES
+        ('Public Restroom'),
+        ('Cafeteria'),
+        ('Salon'),
+        ('Chemist Shop'),
+        ('Parking'),
+        ('Auto Service Center'),
+        ('Retail Store'),
+        ('Food Court'),
+        ('Kids Activity Zone')
