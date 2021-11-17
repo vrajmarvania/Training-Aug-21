@@ -1,0 +1,36 @@
+[
+    {
+        "ID": 1,
+        "Name": "vraj",
+        "Address": "Ahmedabad",
+        "Fees": {
+            "Amount": 10000,
+            "PaymentDate": "12/12/2020",
+            "Status": "true"
+        },
+        "Result": {
+            "Hindi": 101,
+            "Eng": 100,
+            "Math": 60,
+            "Total": 210,
+            "Grade": "A"
+        }
+    },
+    {
+        "ID": 2,
+        "Name": "rina",
+        "Address": "Surat",
+        "Fees": {
+            "Amount": 12000,
+            "PaymentDate": "12/12/2020",
+            "Status": "false"
+        },
+        "Result": {
+            "Hindi": 100,
+            "Eng": 100,
+            "Math": 60,
+            "Total": 210,
+            "Grade": "A"
+        }
+    }
+]
