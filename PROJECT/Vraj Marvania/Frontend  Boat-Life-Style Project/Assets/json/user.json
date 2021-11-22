@@ -1,0 +1,18 @@
+{
+    "type": "userinfo",
+    "data": [
+        {
+            "First_Name": "ADARSH",
+            "Last_Name": "M",
+            "Email": "demo.demo@GMAIL.com",
+            "Password": "demouser"
+        },
+         {
+            "First_Name": "ADARSH",
+            "Last_Name": "M",
+            "Email": "demo1.demo@GMAIL.com",
+            "Password": "demouser1"
+        }
+       
+    ]
+}

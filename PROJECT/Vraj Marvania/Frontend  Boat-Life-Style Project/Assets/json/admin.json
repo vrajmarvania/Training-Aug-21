@@ -1,0 +1,17 @@
+{
+    "type": "admininfo",
+    "data": [
+         {
+            "First_Name": "demouser",
+            "Last_Name": "M",
+            "Email": "demo.demo@GMAIL.com",
+            "Password": "demouser"
+        },
+         {
+            "First_Name": "demouser1",
+            "Last_Name": "M",
+            "Email": "demo1.demo@GMAIL.com",
+            "Password": "demouser1"
+        }
+    ]
+}
