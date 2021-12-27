@@ -1,0 +1,56 @@
+<template>
+      <div class="">
+            <label for="title1" class="Lname">HTML
+               <i class="gg-chevron-down"></i>
+            </label>
+            <input type="checkbox" id="title1" />
+            <div class="content">
+               <!-- DAY1 -->
+               <label for="DAY-1" class="DAY">DAY-1 <i class="gg-chevron-down"></i>
+               </label>
+               <input type="checkbox" id="DAY-1" />
+               <div class="content">
+                  <label for="DAY-1-Assignment" class="NEST">Assignment<i class="gg-chevron-down"></i></label>
+                  <input type="checkbox" id="DAY-1-Assignment" />
+                  <div class="content">
+                     <p><router-link to="/HTML/Form" >Assignment-Form</router-link></p>
+                  </div>
+
+                  <label for="DAY-1Practice" class="NEST">Practice<i class="gg-chevron-down"></i></label>
+                  <input type="checkbox" id="DAY-1Practice" />
+                  <div class="content">
+                     <p><router-link to="/HTML/Practice" >Practice-Task1</router-link></p>
+                  </div>
+
+                  <label for="DAY-1-Additional Practice" class="NEST">Additional Practice<i
+                        class="gg-chevron-down"></i></label>
+                  <input type="checkbox" id="DAY-1-Additional Practice" />
+                  <div class="content">
+                     <p> <router-link to="/HTML/demo" >HTML-Practice</router-link></p>
+                  </div>
+
+               </div>
+               <!-- DAY2 -->
+               <label for="DAY-2" class="DAY">DAY-2<i class="gg-chevron-down"></i></label>
+               <input type="checkbox" id="DAY-2" />
+               <div class="content">
+
+                  <label for="DAY-2-Practice" class="NEST">Practice<i class="gg-chevron-down"></i></label>
+                  <input type="checkbox" id="DAY-2-Practice" />
+                  <div class="content">
+                     <P><router-link to="/HTML/Day2_Practice" >Practice-Task1</router-link></P>
+                  </div>
+               </div>
+            </div>
+      </div>
+</template>
+<script>
+
+export default ({
+   name:'Sidenav'
+})
+</script>
+
+<style >
+
+</style>
