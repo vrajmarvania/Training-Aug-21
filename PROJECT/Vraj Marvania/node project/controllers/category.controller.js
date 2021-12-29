@@ -24,10 +24,10 @@ class CategoryController {
 }
 
 //To get all employees
-router.get("/", CategoryController.get);
+router.get("/getall", CategoryController.get);
 router.get("/:id", CategoryController.getCategory);
 
-router.put("/updateCategory",verifyToken,check_user, CategoryController.updateCategory);
+router.put("/update",verifyToken,check_user, CategoryController.updateCategory);
 router.delete("/:id",verifyToken,check_user, CategoryController.deleteCategory);
 router.post("/insertCategory",verifyToken,check_user, CategoryController.insertCategory);
 

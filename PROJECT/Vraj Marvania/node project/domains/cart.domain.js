@@ -1,21 +1,21 @@
-const CartModel = require("../models/Cart.model");
+const CartModel = require("../models/cart.model");
 const jwt = require("jsonwebtoken");
 global.config = require("../config/config");
 
 class CartDomain {
-
   // get AllProduct----------------------->
-  async getcartdata(req, res) {
-    const token = req.headers["authorization"];
-    console.log(
-      jwt.verify(token, global.config.secretKey, {
-        algorithm: global.config.algorithm,
-      })
-    );
-    const Cart = await CartModel.find().populate("Cart_Products._id"); //.populate({ path: 'Product', model: Conversation });
-    res.send(Cart);
+  async getcart(req, res) {
+    const Cart = await CartModel.find().populate([
+      {
+        path: "Cart_Products.P_id ",
+        model: "Product",
+        populate: {
+          path: "Offer_id",
+        },
+      },
+    ]);
+    res.status(200).send(Cart);
   }
-
 
   // insert Product------------------------------>
   async insertCart(req, res) {
@@ -23,25 +23,40 @@ class CartDomain {
     var id = jwt.verify(token, global.config.secretKey, {
       algorithm: global.config.algorithm,
     }).id;
+
     const query = { User: id };
     var a = await CartModel.find(query);
-    if (a != "") 
-    {
-      var avail = await CartModel.count({User: id,"Cart_Products.P_id": { $in: req.body.Cart_Products[0].P_id },});
-      if (avail == 0) 
-      {
-        const query = { User: id };
-        const resul = await CartModel.findOneAndUpdate(query, {
-          $push: { Cart_Products: req.body.Cart_Products },
-          $set: { Total_price: req.body.Total_price },
+
+    if (a != "") {
+      for (var i in req.body.Cart_Products) {
+        var avail = await CartModel.find({
+          User: id,
+          "Cart_Products.P_id": { $in: req.body.Cart_Products[i].P_id },
         });
-        res.send(resul);
-      } 
-      else {
-        res.send("all ready avil");
+
+        if (avail == "") {
+          const query = { User: id };
+          const resul = await CartModel.findOneAndUpdate(query, {
+            $push: { Cart_Products: req.body.Cart_Products[i] },
+            $set: { Total_price: req.body.Total_price },
+          });
+        } else {
+          var resup = await CartModel.updateOne(
+            {
+              User: id,
+              "Cart_Products.P_id": { $in: req.body.Cart_Products[i].P_id },
+            },
+            {
+              $set: {
+                "Cart_Products.$.Products_qty":
+                  req.body.Cart_Products[i].Products_qty,
+              },
+            }
+          );
+        }
       }
-    }
-    else {
+      res.status(200).send("Successfully Submited");
+    } else {
       let data = {
         User: id,
         Cart_Products: req.body.Cart_Products,
@@ -50,13 +65,12 @@ class CartDomain {
       const Cart = new CartModel(data);
       try {
         const result = await Cart.save();
-        res.send(result);
+        res.status(200).send("Successfully Submited");
       } catch (e) {
-        res.send(e.message);
+        res.status(404).send(e.message);
       }
     }
   }
-
 
   // Remove product from cart---------------------->
   async Remove(req, res) {
@@ -73,7 +87,7 @@ class CartDomain {
         $set: { Total_price: req.body.Total_price },
       }
     );
-    res.send(avail);
+    res.status(200).send(avail);
   }
 }
 

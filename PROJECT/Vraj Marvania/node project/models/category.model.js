@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 
 const categorySchema = new mongoose.Schema({
-  "id":{
+  id: {
     type: String,
-   },
+  },
   CategoryName: {
-    type: "String",
+    type: String,
     unique: true,
     required: true,
   },
   Type: {
-    type: "String",
+    type: String,
     required: true,
   },
   Fimg: {
-    type: "String",
+    type: String,
   },
   Data: [
     {
@@ -26,6 +26,10 @@ const categorySchema = new mongoose.Schema({
   ],
   IsDeleted: { type: Boolean, default: 0 },
 });
+
+//Indexes----------------->
+categorySchema.index({ CategoryName: 1 }); // schema level
+
 const categoryModel = mongoose.model("Category", categorySchema);
 
 module.exports = categoryModel;

@@ -1,33 +1,34 @@
 const mongoose = require("mongoose");
 
-
 const SubcategorySchema = new mongoose.Schema({
-  "id":{
-     type: String,
-    },
-  "SubCategoryName": {
+  id: {
+    type: String,
+  },
+  SubCategoryName: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
-  "type": {
+  Type: {
     type: String,
-    required: true
+    required: true,
   },
-  "Fimg": {
-    type: String
+  Fimg: {
+    type: String,
   },
-  "Data": [
+  Data: [
     {
-      "_id":
-      {
+      _id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
-      }
-    }
+      },
+    },
   ],
-  "IsDeleted": { type: Boolean, default: 0 },
-})
+  IsDeleted: { type: Boolean, default: 0 },
+});
+
+//Indexes----------------->
+SubcategorySchema.index({ SubCategoryName: 1 }); // schema level
 
 const SubCategoryModel = mongoose.model("SubCategory", SubcategorySchema);
 

@@ -1,0 +1,98 @@
+category
+-  id  pk
+- CategoryName
+-  Type
+-  Fimg
+-  Data   fk product.id
+-  isdeleted
+  
+product
+-  id   pk
+-  Name
+-  Price
+-  Img
+-  OldPrice
+-  Dis
+-  CategoryName
+-  isdeleted
+
+SubCategory
+-  id   pk
+-  ubCategoryName
+-  type:
+-  Fimg:
+-  Data: fk product.id
+-  isdeleted
+
+Cart
+-  id 
+-  User fk user.id   pk
+-  Cart_Products fk product.id
+-  Total_price
+-  IsDeleted
+
+OrderDetails
+-  OrderDetailId:   pk
+-  Cart_Products:  
+-  Total_price: 
+
+Order
+-  OrderId  pk
+-  UserId:  fk
+-  order_date
+-  OrderDetail  fk
+-  Total_Price
+-  Phone_No
+-  Paymentid  fk
+-  Address
+-  City
+-  State
+-  Pincode
+-  isdeleted
+
+Payment
+-  Paymentid pk
+-  Paymenttype
+
+Offer  
+-  OfferId
+-  OfferName
+-  type:
+-  Fimg:
+-  Data: fk product.id
+-  isdeleted
+
+Register 
+-    id pk
+-    First_Name 
+-    Last_Name 
+-    Email
+-    Password        //TYPE---->> 1=user// 2=admin
+-    Type
+-   isdeleted
+   
+User
+-  id
+-  First_Name
+-  Last_Name
+-  Email
+-  Password
+-  Type
+-  IsDeleted
+
+User_address
+-  User_Id  fk
+-  First Name
+-  Last Name
+-  Company
+-  Address1
+-  Address2
+-  City
+-  Country
+-  Province
+-  Postal/Zip Code
+-  Phone
+-  Set as default address
+-  isdeleted
+
+-  Product Review & comment

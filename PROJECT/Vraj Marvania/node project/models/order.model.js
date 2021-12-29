@@ -4,16 +4,10 @@ const a = require("../models/user.model");
 // OrderDetailsSchema------------------------------------->
 const OrderDetailsSchema = new mongoose.Schema({
   OrderDetailId: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
-  Cart_Products: [
-    {
-      P_id: [
-        {
+  Cart_Products: [{
           P_id: { type: Object },
-          Products_qty: { type: Number },
-        },
-      ],
-    },
-  ],
+          Products_qty: { type: Number }
+   }],
   Total_price: { type: Number },
 });
 
@@ -23,6 +17,8 @@ const OrderDetailsModel = mongoose.model("OrderDetails", OrderDetailsSchema);
 const user = new mongoose.Schema({
   id: {
     type: String,
+    unique:false,
+
   },
   First_Name: {
     type: String,
@@ -36,10 +32,9 @@ const user = new mongoose.Schema({
   },
   Email: {
     type: String,
-    required: true,
-    unique: true,
-    max: 100,
-  }, //TYPE---->> 1=user// 2=admin
+    max: 100
+  },
+  //TYPE---->> 1=user// 2=admin
   Type: {
     type: Number,
     enum: [1, 2],
@@ -48,6 +43,7 @@ const user = new mongoose.Schema({
 });
 
 // Order Schema===================================================>
+
 const OrderSchema = new mongoose.Schema({
   OrderId: {
     type: Number,
@@ -86,15 +82,19 @@ const OrderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  IsDeleted: { type: Boolean, default: 0 },
+  IsDeleted: {
+    type: Boolean,
+    default: 0,
+  },
 });
+
+
+//Indexes----------------->
+// OrderSchema.index({ OrderId: 1 }); // schema level
 
 const OrderModel = mongoose.model("Orders", OrderSchema);
 
 module.exports = { OrderDetailsModel, OrderModel };
-
-
-
 
 
 

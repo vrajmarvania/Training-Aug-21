@@ -21,10 +21,11 @@ class SubCategoryController {
     static async deleteSubCategory(req, res) {
       subCategoryDomain.deleteSubCategory(req, res);
       }
+      
 }
 
 //To get all employees
-router.get("/", SubCategoryController.getallSubCategory);
+router.get("/getall", SubCategoryController.getallSubCategory);
 router.get("/:id", SubCategoryController.getSubCategory);
 router.put("/updateSubCategory",verifyToken,check_user, SubCategoryController.updateSubCategory);
 router.delete("/:id",verifyToken,check_user, SubCategoryController.deleteSubCategory);

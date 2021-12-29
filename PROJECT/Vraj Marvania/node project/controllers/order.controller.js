@@ -8,7 +8,9 @@ class OrderController {
     static async get(req, res) {
         orderDomain.getAllOrder(req, res);
       }
-      
+    static async getById(req, res) {
+        orderDomain.getById(req, res);
+      }
     static async SetOrder(req, res) {
         orderDomain.SetOrder(req, res);
       }
@@ -16,7 +18,8 @@ class OrderController {
 
 //To get all employees
 
-router.get("/", OrderController.get);
+router.get("/get", OrderController.get);
+router.get("/:id", OrderController.getById);
 router.post("/insertOrder", OrderController.SetOrder);
 
 
@@ -35,3 +38,4 @@ module.exports = router;
 // "Pincode":"360005"
 
 // }
+// 61933405862a515b21331556

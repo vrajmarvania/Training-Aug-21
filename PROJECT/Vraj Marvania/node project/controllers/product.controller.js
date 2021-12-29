@@ -23,12 +23,11 @@ class ProductController {
 }
 
 //To get all employees
-router.get("/", ProductController.get);
+router.get("/getall", ProductController.get);
 router.get("/:Id", ProductController.getProduct);
-
-router.put("/updateProduct",verifyToken,check_user, ProductController.updateProduct);
-router.delete("/:id",verifyToken,check_user, ProductController.DeleteProduct);
-router.post("/insertProduct",verifyToken,check_user, ProductController.insertProduct);
+router.post("/insert",verifyToken,check_user, ProductController.insertProduct);
+router.put("/update",verifyToken,check_user, ProductController.updateProduct);
+router.delete("/delete/:id",verifyToken,check_user, ProductController.DeleteProduct);
 
 
 
