@@ -3,7 +3,11 @@ const jwt = require("jsonwebtoken");
 global.config = require("../config/config");
 
 class CartDomain {
-  // get AllProduct----------------------->
+  // ===========================================================================
+  // getcart
+  // access:user & admin
+  // ===========================================================================
+
   async getcart(req, res) {
     const Cart = await CartModel.find().populate([
       {
@@ -16,8 +20,15 @@ class CartDomain {
     ]);
     res.status(200).send(Cart);
   }
+  // ===========================================================================
+  // insert in cart
+  // access:user
+  // input: cart data
+  // Cart_Products
+  // Products_qty
+  // Total_price
+  // ===========================================================================
 
-  // insert Product------------------------------>
   async insertCart(req, res) {
     const token = req.headers["authorization"];
     var id = jwt.verify(token, global.config.secretKey, {
@@ -72,7 +83,12 @@ class CartDomain {
     }
   }
 
-  // Remove product from cart---------------------->
+  // ===========================================================================
+  // Remove product from cart
+  // access:user
+  // input:product id
+  // ===========================================================================
+
   async Remove(req, res) {
     const token = req.headers["authorization"];
     var id = jwt.verify(token, global.config.secretKey, {

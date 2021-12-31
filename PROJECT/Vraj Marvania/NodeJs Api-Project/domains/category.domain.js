@@ -1,7 +1,11 @@
 const CategoryModel = require("../models/category.model");
 
 class CategoryDomain {
-  // get All Category-------------------------->
+  // ===========================================================================
+  //  getallCategory
+  // access:user & admin
+  // ===========================================================================
+
   async getAllCategory(req, res) {
     const Category = await CategoryModel.find().populate([
       {
@@ -19,7 +23,11 @@ class CategoryDomain {
     }
   }
 
-  // get  Category -------------------------->
+  // ===========================================================================
+  //  getCategory
+  // access:user & admin
+  // ===========================================================================
+
   async getCategory(req, res) {
     let id = req.params.id;
     const Category = await CategoryModel.find(
@@ -41,7 +49,14 @@ class CategoryDomain {
     }
   }
 
-  // insert Category------------------------->
+  // ===========================================================================
+  //  insertCategory Category
+  // access:  admin
+  // input
+  // -CategoryName
+  // -Type
+  // -Fimg
+  // ===========================================================================
   async insertCategory(req, res) {
     let data = req.body;
     const Category = new CategoryModel(data);
@@ -53,7 +68,17 @@ class CategoryDomain {
     }
   }
 
-  // update Category---------------------->
+  // ===========================================================================
+  //  update Category
+  // access:admin
+  // input---
+  // -id
+  // -_id
+  // -CategoryName
+  // -Type
+  // -Fimg
+  // ===========================================================================
+
   async updateCategory(req, res) {
     let data = req.body;
     let id = req.body._id;
@@ -74,7 +99,13 @@ class CategoryDomain {
     }
   }
 
-  // delete Category------------------------------->
+  // ===========================================================================
+  // delete Category
+  // access: admin
+  // input---
+  // -id
+  // ===========================================================================
+
   async deleteCategory(req, res) {
     let id = req.params.id;
     const avl = await CategoryModel.findById(id);

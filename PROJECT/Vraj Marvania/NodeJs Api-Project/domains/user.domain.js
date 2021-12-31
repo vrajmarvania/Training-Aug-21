@@ -5,7 +5,11 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 class loginDomain {
-  // get all user data---------------------->
+   // ===========================================================================
+  // get user
+  // access:admin
+  // ===========================================================================
+
   async getAllUser(req, res) {
     const user = await UserModel.UserModel.find();
     res.send(user);
@@ -16,6 +20,11 @@ class loginDomain {
     var user = await UserModel.UserModel.findById(_id);
     res.send(user);
   }
+ // ===========================================================================
+  // get user
+  // access:user & admin
+  // input:id
+  // ===========================================================================
 
   // Register User------------------------->
   async RegisterUser(req, res) {
@@ -30,14 +39,19 @@ class loginDomain {
       res.send(e.message);
     }
   }
-  
+   // ===========================================================================
+  //login
+  // access:user & admin
+  // input:Email,Password
+  // ===========================================================================
+
   // login user
   async login(req, res) {
     let userdata = {
       Email: req.body.Email,
     };
     var val = await UserModel.UserModel.find(userdata);
-
+    
     console.log(userdata)
     var vala = await bcrypt.compare(req.body.Password, val[0].Password);
 
@@ -62,6 +76,12 @@ class loginDomain {
       });
     }
   }
+
+   // ===========================================================================
+  // update User
+  // access:user & admin
+  // input:token login
+  // ===========================================================================
 
   // update user
   async updateUser(req, res) {

@@ -1,7 +1,11 @@
 const OfferModel = require("../models/offer.model");
 
 class OfferDomain {
-  // get All Offer-------------------------->
+  // ===========================================================================
+  //  get  All Offer
+  // access:user & admin
+  // ===========================================================================
+
   async getAllOffer(req, res) {
     const Offer = await OfferModel.find().populate("Data.Productid");
     if (Offer != "") {
@@ -10,11 +14,14 @@ class OfferDomain {
       res.status(404).send("Offer Not Found");
     }
   }
+  // ===========================================================================
+  //  get   Offer
+  // access:user & admin
+  // ===========================================================================
 
-  // get  Offer -------------------------->
   async getOffer(req, res) {
     let id = req.params.id;
-    const Offer = await OfferModel.find({ _id: id, IsDeleted: false }).populate(
+    const Offer = await OfferModel.find({ id: id, IsDeleted: false }).populate(
       "Data.Productid"
     );
     if (Offer != "") {
@@ -24,7 +31,11 @@ class OfferDomain {
     }
   }
 
-  //get Active Offers data ------------------->
+  // ===========================================================================
+  //  get Active All Offer
+  // access:user & admin
+  // ===========================================================================
+
   async Active_Offers(req, res) {
     const data = await OfferModel.find({
       Offer_End_Date: { $gte: new Date() },
@@ -39,7 +50,18 @@ class OfferDomain {
     }
   }
 
-  // insert Offer------------------------->
+  // ===========================================================================
+  //  add new Offer
+  // access: admin
+  // input:--
+  //   "id"
+  //   "Offer_id
+  //   "OfferName
+  //   "Offer_Start_Date
+  //   "Offer_End_Date
+  //   "Offer_pct"0
+  // ===========================================================================
+
   async insertOffer(req, res) {
     let data = req.body;
     const Offer = new OfferModel(data);
@@ -50,6 +72,18 @@ class OfferDomain {
       res.send(e.message);
     }
   }
+
+  // ===========================================================================
+  //  update Offer
+  // access: admin
+  // input:--
+  //   "id"
+  //   "Offer_id
+  //   "OfferName
+  //   "Offer_Start_Date
+  //   "Offer_End_Date
+  //   "Offer_pct"0
+  // ===========================================================================
 
   // update Offer---------------------->
   async updateOffer(req, res) {
@@ -72,8 +106,11 @@ class OfferDomain {
       res.status(404).send("Offer Not Found");
     }
   }
+  // ===========================================================================
+  //  delete Offer
+  // access: admin
+  // ===========================================================================
 
-  // delete Offer------------------------------->
   async deleteOffer(req, res) {
     let id = req.params.id;
     const Offer = await OfferModel.findByIdAndUpdate(id, { IsDeleted: true });

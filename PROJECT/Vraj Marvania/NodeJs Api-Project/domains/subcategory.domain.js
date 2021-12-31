@@ -1,7 +1,11 @@
 const SubCategoryModel = require("../models/subcategory.model");
 
 class SubCategoryDomain {
-  // get AllSubCategory------------------->
+  // ===========================================================================
+  // get SubCategory
+  // access:user & admin
+  // ===========================================================================
+
   async getAllSubCategory(req, res) {
     const SubCategory = await SubCategoryModel.find().populate("Data._id");
     if (SubCategory != "") {
@@ -10,8 +14,12 @@ class SubCategoryDomain {
       res.status(404).send("Category Not Found");
     }
   }
+  // ===========================================================================
+  // get SubCategory
+  // access:user & admin
+  // input:id
+  // ===========================================================================
 
-  // get SubCategory ------------------>
   async getSubCategory(req, res) {
     let id = req.params.id;
     const SubCategory = await SubCategoryModel.find({
@@ -23,8 +31,12 @@ class SubCategoryDomain {
       res.status(404).send("Category Not Found");
     }
   }
+  // ===========================================================================
+  //  insert SubCategory
+  // access: admin
+  // input:id
+  // ===========================================================================
 
-  // insert SubCategory  ----------------->
   async insertSubCategory(req, res) {
     //getting user input
     let data = req.body;
@@ -36,8 +48,12 @@ class SubCategoryDomain {
       res.send(e.message);
     }
   }
+  // ===========================================================================
+  // update SubCategory
+  // access: admin
+  // input:id
+  // ===========================================================================
 
-  // update SubCategory  ---------------->
   async updateSubCategory(req, res) {
     let data = req.body;
     let id = req.body._id;
@@ -60,7 +76,12 @@ class SubCategoryDomain {
     }
   }
 
-  // delete SubCategory ---------------------->
+  // ===========================================================================
+  //  delete SubCategory
+  // access: admin
+  // input:id
+  // ===========================================================================
+
   async deleteSubCategory(req, res) {
     let id = req.params.id;
     const SubCategory = await SubCategoryModel.findByIdAndUpdate(id, {

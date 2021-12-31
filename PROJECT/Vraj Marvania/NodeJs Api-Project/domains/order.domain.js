@@ -9,22 +9,37 @@ const conn = require("../app"); // import connection
 const { compareSync } = require("bcrypt");
 
 class OrderDomain {
-  // get all order details
+  // ===========================================================================
+  //  get  All order details
+  // access:user & admin
+  // ===========================================================================
+
   async getAllOrder(req, res) {
     var Order = await OrderModel.OrderModel.find();
     res.status(200).send(Order);
   }
 
-  // get by id order---------------------------->
+  // ===========================================================================
+  //  get   order details
+  // access:user & admin
+  // input:id
+  // ===========================================================================
+
   async getById(req, res) {
     let id = req.params.id;
-    const Order = await OrderModel.OrderModel.findById(id, "-id"); //.populate("department",);
+    const Order = await OrderModel.OrderModel.find({id:id}, "-id"); //.populate("department",);
     if (Order) {
       res.send(Order);
     } else {
       res.status(404).send("product Not Found");
     }
   }
+
+  // ===========================================================================
+  // insert  order details
+  // access:user & admin
+  // input:id
+  // ===========================================================================
 
   // insert  order details
   async SetOrder(req, res) {
@@ -62,7 +77,7 @@ class OrderDomain {
         const Order = new OrderModel.OrderDetailsModel(data, "");
         // const result = await Order.save();
         var total = 0.0;
-        
+
         for (var i of Cart[0].Cart_Products) {
           const Product = await ProductModel.findById(i.P_id);
           if (Product.Qty >= i.Products_qty) {

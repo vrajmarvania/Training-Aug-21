@@ -7,14 +7,19 @@ category
 -  isdeleted
   
 product
--  id   pk
--  Name
--  Price
--  Img
--  OldPrice
--  Dis
--  CategoryName
--  isdeleted
+ - id
+ - Name
+ - CategoryName
+ - img
+ - Color
+ - Price
+ - OldPrice
+ - Qty
+ - Dis
+ - Offer_id
+ - Review: [Review_id],
+ - isdeleted
+
 
 SubCategory
 -  id   pk
@@ -79,6 +84,32 @@ User
 -  Password
 -  Type
 -  IsDeleted
+
+blogs
+  -Id
+  -Blog_Img
+  -Blog_Title
+  -Blog_Date
+  -Blog_Dis
+  -Imgs 
+  -IsDeleted
+
+Offer:
+ - Offer_id
+ - OfferName
+ - Offer_Start_Date
+ - Offer_End_Date
+ - Offer_pct
+ - IsDeleted
+
+Review
+-  Review_Id
+-  Name:
+-  Rating:
+-  Review_Title:
+-  Review:
+-  Imgs: 
+-  IsDeleted:
 
 User_address
 -  User_Id  fk

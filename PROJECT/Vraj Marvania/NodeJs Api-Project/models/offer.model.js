@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const offerSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+  },
   Offer_id: {
     type: String,
   },
@@ -20,6 +23,8 @@ const offerSchema = new mongoose.Schema({
   Offer_pct:{
     type: Number,
     required: true,
+    min:0,
+    max:100,
   },
   IsDeleted: { type: Boolean, default: 0 },
 });

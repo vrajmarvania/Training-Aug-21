@@ -20,8 +20,7 @@ class SubCategoryController {
       }
     static async deleteSubCategory(req, res) {
       subCategoryDomain.deleteSubCategory(req, res);
-      }
-      
+      }      
 }
 
 //To get all employees

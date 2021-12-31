@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const BlogsSchema = new mongoose.Schema({
-  Id: {
-    type: String,
+  id: {
+    type: Number,
   },
   Blog_Img: {
     type: "String",

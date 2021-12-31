@@ -5,7 +5,11 @@ const jwt = require("jsonwebtoken");
 global.config = require("../config/config");
 
 class ProductDomain {
-  // get AllProduct----------------------->
+  // ===========================================================================
+  //get AllProduct
+  // access:user & admin
+  // ===========================================================================
+
   async getAllProduct(req, res) {
     const Product = await ProductModel.find({ isdeleted: false })
       .populate("Offer_id")
@@ -16,19 +20,27 @@ class ProductDomain {
       res.status(404).send("Product Not Found");
     }
   }
+  // ===========================================================================
+  //get Product
+  // access:user & admin
+  // input:id
+  // ===========================================================================
 
-  // get Product---------------------------->
   async getProduct(req, res) {
     let id = req.params.Id;
-    const Product = await ProductModel.findById(id).populate("Offer_id");
+    const Product = await ProductModel.find({id:id}).populate("Offer_id");
     if (Product) {
       res.status(200).send(Product);
     } else {
       res.status(404).send("product Not Found");
     }
   }
+  // ===========================================================================
+  //insert Product
+  // access: admin
+  // input:id
+  // ===========================================================================
 
-  // insert Product------------------------------>
   async insertProduct(req, res) {
     let data = req.body;
     const Product = new ProductModel(data);
@@ -49,8 +61,12 @@ class ProductDomain {
       res.send(e.message);
     }
   }
+  // ===========================================================================
+  // update  Product
+  // access:admin
+  // input:id
+  // ===========================================================================
 
-  // update  Product--------------------->
   async updateProduct(req, res) {
     if (req.body._id == null) {
       res.status(404).send("id not found");
@@ -79,10 +95,16 @@ class ProductDomain {
     }
   }
 
+  // ===========================================================================
+  //DeleteProduct
+  // access:admin
+  // input:id
+  // ===========================================================================
+
   // DeleteProduct  ------------------->
   async DeleteProduct(req, res) {
     let id = req.params.id;
-    if ((id == null)) {
+    if (id == null) {
       res.status(404).send("Id Not Found");
     }
     const Product = await ProductModel.findByIdAndUpdate(id, {

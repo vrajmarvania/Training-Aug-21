@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const RegisterSchema = new mongoose.Schema({
   id: {
-    type: String,
+    type: Number,
   },
   First_Name: {
     type: String,

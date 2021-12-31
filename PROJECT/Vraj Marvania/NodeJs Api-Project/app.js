@@ -9,11 +9,14 @@ const order = require("./controllers/order.controller");
 const offer = require("./controllers/offer.controller");
 const blogs = require("./controllers/blog.controller");
 const review = require("./controllers/review.controller");
+const search = require("./controllers/search.controller");
 
-
+var cors = require('cors')
 const app = express();
 port = 8000
 app.use(express.json());
+
+app.use(cors())
 
 var mongoDB = "mongodb://localhost/BoatLifeStyle";
 mongoose
@@ -35,6 +38,7 @@ app.use("/order", order);
 app.use("/offer", offer);
 app.use("/blogs",blogs);
 app.use("/review",review);
+app.use("/search",search);
 app.listen(port, () => { console.log(`app listening at http://localhost:${port}`) })
 
 

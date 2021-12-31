@@ -4,7 +4,11 @@ const jwt = require("jsonwebtoken");
 global.config = require("../config/config");
 
 class BlogsDomain {
-  // get AllBlogs----------------------->
+  // ===========================================================================
+  // get AllBlogs
+  // access:user & admin
+  // ===========================================================================
+
   async getAllBlogs(req, res) {
     const Blogs = await BlogsModel.find();
     if (Blogs) {
@@ -13,11 +17,15 @@ class BlogsDomain {
       res.status(404).send("Blogs Not Found");
     }
   }
+  // ===========================================================================
+  // get one Blogs using id
+  // access:user & admin
+  // input:id
+  // ===========================================================================
 
-  // get Blogs---------------------------->
   async getBlogs(req, res) {
     let id = req.params.Id;
-    const Blogs = await BlogsModel.findById(id); //.populate("department",);
+    const Blogs = await BlogsModel.find({id:id}); //.populate("department",);
     if (Blogs) {
       res.status(200).send(Blogs);
     } else {
@@ -25,7 +33,18 @@ class BlogsDomain {
     }
   }
 
-  // insert Blogs------------------------------>
+  // ===========================================================================
+  // add new Blogs
+  // access:admin  only
+  //  input:--->
+  //-  id
+  //-  Blog_Img
+  //-  Blog_Title
+  //-  Blog_Date
+  //-  Blog_Dis
+  //-  IsDeleted
+  //-  Imgs 
+  // ===========================================================================
 
   async insertBlogs(req, res) {
     let data = req.body;
@@ -38,7 +57,19 @@ class BlogsDomain {
     }
   }
 
-  //   update blog ----------------------->
+  // ===========================================================================
+  // update Blogs
+  // access:admin  only
+  // input:id & data
+  //-  _id
+  //-  Blog_Img
+  //-  Blog_Title
+  //-  Blog_Date
+  //-  Blog_Dis
+  //-  IsDeleted
+  //-  Imgs 
+  // ===========================================================================
+
   async updateBlogs(req, res) {
     let data = req.body;
     let id = req.body._id;
@@ -61,7 +92,12 @@ class BlogsDomain {
     }
   }
 
-  // delete Blogs ---------------------->
+  // ===========================================================================
+  // delete Blogs
+  // access:admin  only
+  // input:id
+  // ===========================================================================
+
   async DeleteBlogs(req, res) {
     let id = req.params.id;
     const Blogs = await BlogsModel.findByIdAndUpdate(id, {
